@@ -1,0 +1,54 @@
+<html>
+
+<head>
+	<title>{{t}}</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/estilos.css">
+</head>
+
+<body>
+	<h1>{{h}}</h1>
+	<hr>
+	{% if lista[0] %}
+	<h3>Resultado de la búsqueda</h3>
+	<table class="listado">
+		<colgroup>
+			<col style="width: 5% /* Estado */"> 
+			<col style="width: 20% /* Nombre */"> 
+			<col style="width: 40% /* Descripción */"> 
+			<col style="width: 7% /* Fecha */"> 
+			<col style="width: 7% /* Prioridad */"> 
+			<col style="width: 8% /* Eliminar */"> 
+			<col style="width: 8% /* Editar */"> 
+		  </colgroup>
+		<tr>
+			<th>Estado</th>
+			<th>Nombre de tarea</th>
+			<th>Descripción</th>
+			<th>Fecha</th>
+			<th>Prioridad</th>
+			<th>ELIMINAR</th>
+			<th>EDITAR</th>
+		</tr>
+		{% for tarea in lista %}
+		<tr>
+			<td><a href="/cambiar?_id={{ tarea['_id'] }}"><input type="image"
+						src="static/pics/{{tarea['acabada']}}.png" alt="Cambiar estado"></a></td>
+			<td>{{ tarea["nombre"] }}</td>
+			<td>{{ tarea["descripcion"] }}</td>
+			<td>{{ tarea["fecha"] }}</td>
+			<td>{{ tarea["prioridad"] }}</td>
+			<th><a href="/eliminar?_id={{ tarea['_id'] }}"><button type="submit">ELIMINAR</button></a>
+			</th>
+			<th><a href="/editar?_id={{ tarea['_id'] }}"><button type="submit">EDITAR</button></a>
+			</th>
+		</tr>
+		{% endfor %}
+	</table>
+		{% else %}
+		<h4>¡¡ No hay tareas para mostrar !!</h4>
+		{% endif %}
+	<br>
+	<a href="/"><button>VOLVER AL LISTADO DE TAREAS</button></a>
+</body>
+
+</html>

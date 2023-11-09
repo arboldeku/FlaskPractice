@@ -1,0 +1,111 @@
+<html>
+
+<head>
+	<title>{{ t }}</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/estilos.css">
+</head>
+
+<body>
+	<h1>{{ h }}</h1>
+	<ul>
+		<li><a href="/todas" class="{{ a1 }}">TODAS</a></li>
+		<li><a href="/incompletas" class="{{ a2 }}">Sin completar</a></li>
+		<li><a href="/completadas" class="{{ a3 }}">Completadas</a></li>
+	</ul>
+	<hr>
+	{% if lista[0] %}
+	<div id="cuerpo">
+		<form action="/buscar" method="GET">
+			<table>
+				<colgroup>
+					<col style="width: 40%">
+					<col style="width: 25%">
+					<col style="width: 15%">
+					<col style="width: 12%">
+					<col style="width: 8%">
+				</colgroup>
+				<tr>
+					<td></td>
+					<th>Concepto de búsqueda:</th>
+					<td><select name="campo">
+							<option value="nombre">Nombre de tarea</option>
+							<option value="descripcion">Descripción</option>
+							<option value="fecha">Fecha</option>
+							<option value="prioridad">Prioridad</option>
+						</select></td>
+					<td><input type="text" name="valor" placeholder="Valor a buscar" size="15" /></td>
+					<th><button type="submit">BUSCAR</button></th>
+				</tr>
+			</table>
+		</form>
+		<b>LISTA DE TAREAS:</b>
+		<table class="listado">
+			<colgroup>
+				<col style="width: 5% /* Estado */">
+				<col style="width: 20% /* Nombre */">
+				<col style="width: 35% /* Descripción */">
+				<col style="width: 15% /* Fecha */">
+				<col style="width: 10% /* Prioridad */">
+				<col style="width: 8% /* Eliminar */">
+				<col style="width: 8% /* Editar */">
+			</colgroup>
+			<tr>
+				<th>Estado</th>
+				<th>Nombre de tarea</th>
+				<th>Descripción</th>
+				<th>Fecha</th>
+				<th>Prioridad</th>
+				<th>ELIMINAR</th>
+				<th>EDITAR</th>
+			</tr>
+			{% for tarea in lista %}
+			<tr>
+				<td><a href="/cambiar?_id={{ tarea['_id'] }}"><input type="image"
+							src="static/pics/{{tarea['acabada']}}.png" alt="Cambiar estado"></a></td>
+				<td>{{ tarea["nombre"] }}</td>
+				<td>{{ tarea["descripcion"] }}</td>
+				<td>{{ tarea["fecha"] }}</td>
+				<td>{{ tarea["prioridad"] }}</td>
+				<th><a href="/eliminar?_id={{ tarea['_id'] }}"><button type="submit">ELIMINAR</button></a>
+				</th>
+				<th><a href="/editar?_id={{ tarea['_id'] }}"><button type="submit">EDITAR</button></a>
+				</th>
+			</tr>
+			{% endfor %}
+		</table>
+		{% else %}
+		<h4>¡¡ No hay tareas para mostrar !!</h4>
+		{% endif %}
+	</div>
+	<hr />
+	<form action="/agregar" method="POST">
+		<table>
+			<colgroup>
+				<col style="width: 20% /* Nombre */">
+				<col style="width: 25% /* Descripción */">
+				<col style="width: 25% /* Fecha */">
+				<col style="width: 20% /* Prioridad */">
+				<col style="width: 10% /* Crear */">
+
+			</colgroup>
+			<tr>
+				<td colspan=3><b>Agregar una tarea:</b></td>
+			</tr>
+			<tr>
+				<td><input type="text" name="nombre" placeholder="Nombre de tarea" /></td>
+				<td><textarea name="descripcion" rows="1" cols="50" ç placeholder="Escriba la descripción aquí..."
+						required></textarea></td>
+				<th><label>Fecha </label><input type="date" name="fecha" placeholder="Fecha" /></th>
+				<th><label>Prioridad </label>
+					<select name="prioridad">
+						<option value="Baja">Baja</option>
+						<option value="Normal">Normal</option>
+						<option value="Alta">Alta</option>
+					</select></th>
+				<td><button type="submit">CREAR</button></td>
+			</tr>
+		</table>
+	</form>
+</body>
+
+</html>

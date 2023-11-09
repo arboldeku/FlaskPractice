@@ -1,0 +1,55 @@
+<html>
+<head>
+	<title>{{t}}</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/estilos.css">
+</head>
+
+<body>
+	<h1>{{h}}</h1>
+	<hr>
+	<h3>Actualizar tarea</h3>
+	<form action="/actualizar" method="POST">
+		
+		<input type="text" name="_id" value="{{ tarea['_id'] }}" hidden>
+
+		<table>
+			<tr>
+				<td class="datos">ID de la tarea:</td>
+				<td>{{ tarea['_id'] }}</td>
+			</tr>
+			<tr>
+				<td class="datos">Nombre de tarea:</td>
+				<td><input type="text" name="nombre" value="{{ tarea['nombre'] }}"
+					  placeholder="{{ tarea['nombre'] }}"></td>
+			</tr>
+			<tr>
+				<td  class="datos">Descripción:</td>
+				<td><textarea type="text" name="descripcion" rows=3 cols=30
+						placeholder="{{ tarea['descripcion'] }}">{{ tarea['descripcion'] }}</textarea></td>
+			</tr>
+			<tr>
+				<td class="datos">Fecha:</td>
+				<td><input type="date" name="fecha" value="{{ tarea['fecha'] }}"
+					 placeholder="{{ tarea['fecha'] }}"></td>
+			</tr>
+			<tr>
+				<td class="datos">Prioridad:</td>
+				<td><select name="prioridad">
+						<option value="Baja"
+						 {% if  tarea['prioridad']=='Baja' %}selected{% endif %}>Baja</option>
+						<option value="Normal"
+						{% if  tarea['prioridad']=='Normal' %}selected{% endif %}>Normal</option>
+						<option value="Alta"
+						{% if  tarea['prioridad']=='Alta' %}selected{% endif %}>Alta</option>
+					</select></td>
+			</tr>
+		</table>
+
+		<br />
+		<button type="submit">ACTUALIZAR TAREA</button>
+		<br />
+	</form>
+	<br />
+	<a href="/"><button>VOLVER AL LISTADO DE TAREAS</button></a>
+</body>
+</html>
